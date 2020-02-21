@@ -14,7 +14,7 @@ db = SQLAlchemy()
 
 class User(db.Model):
     """User of ratings website."""
-
+    
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
@@ -22,6 +22,11 @@ class User(db.Model):
     password = db.Column(db.String(64), nullable=True)
     age = db.Column(db.Integer, nullable=True)
     zipcode = db.Column(db.String(15), nullable=True)
+
+    def __repr__(self):
+        """provide helpful representation when printed""" 
+
+        return f"<User user_id={self.user_id} email={self.email}>"     
 
 
 class Movie(db.Model):
@@ -46,10 +51,8 @@ class Rating(db.Model):
     user_id = db.Column(db.Integer, nullable=False)
 
 
-
 ##############################################################################
 # Helper functions
-
 def connect_to_db(app):
     """Connect the database to our Flask app."""
 
