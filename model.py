@@ -24,7 +24,27 @@ class User(db.Model):
     zipcode = db.Column(db.String(15), nullable=True)
 
 
-# Put your Movie and Rating model classes here.
+class Movie(db.Model):
+    """Movie on ratings website."""
+
+    __tablename__ = "movie"
+
+    movie_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    title = db.Column(db.String(64), nullable=False)
+    released_at = db.Column(db.DateTime, nullable=False)
+    imdb_url = db.Column(db.String(500), nullable=False)
+
+
+class Rating(db.Model):
+    """rating of movie on ratings website."""
+
+    __tablename__ = "rating"
+
+    rating_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    movie_id = db.Column(db.Integer, nullable=False)
+    score = db.Column(db.Integer, nullable=True)
+    user_id = db.Column(db.Integer, nullable=False)
+
 
 
 ##############################################################################
