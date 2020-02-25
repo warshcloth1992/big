@@ -48,6 +48,10 @@ def load_movies():
         row = row.rstrip()
         row_items = row.split("|")
         movie_id, title, released_at, imdb_url = row_items[0:4]
+        title_list = title.split()
+        trimmed_list = title_list[0:-1]
+        title = " ".join(trimmed_list)
+        print(title)
 
         movie = Movie(movie_id=movie_id, title=title, released_at=released_at, imdb_url=imdb_url)
 
@@ -70,10 +74,10 @@ def load_ratings():
     for row in open("seed_data/u.data"):
         row = row.strip(" ")
         row_items = row.split()
-        print(row_items)
-        rating_id, movie_id, score, user_id = row_items[0:4]
+        #print(row_items)
+        movie_id, user_id, score = row_items[0:3]
 
-        rating = Rating(rating_id=rating_id, movie_id=movie_id, score=score, user_id=user_id)
+        rating = Rating(movie_id=movie_id, user_id=user_id, score=score)
 
         # We need to add to the session or it won't ever be stored
         db.session.add(rating)
