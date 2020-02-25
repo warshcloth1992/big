@@ -7,6 +7,7 @@ from model import Movie
 
 from model import connect_to_db, db
 from server import app
+from datetime import datetime
 
 
 def load_users():
@@ -51,7 +52,12 @@ def load_movies():
         title_list = title.split()
         trimmed_list = title_list[0:-1]
         title = " ".join(trimmed_list)
-        print(title)
+        released_at = datetime.strptime(released_at, "%d-%b-%Y")
+        # experiment with type funtion with this object later
+    
+        print(released_at.year)
+        print(released_at.day)
+        print(released_at.month)
 
         movie = Movie(movie_id=movie_id, title=title, released_at=released_at, imdb_url=imdb_url)
 
