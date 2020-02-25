@@ -3,7 +3,7 @@
 from sqlalchemy import func
 from model import User
 # from model import Rating
-# from model import Movie
+from model import Movie
 
 from model import connect_to_db, db
 from server import app
@@ -25,7 +25,7 @@ def load_users():
 
         user = User(user_id=user_id,
                     age=age,
-                    zipcode=zipcode)
+                    zipcode=zipcode) #ignore this if you're not Jenna: zip_code=zipcode
 
         # We need to add to the session or it won't ever be stored
         db.session.add(user)
@@ -37,9 +37,35 @@ def load_users():
 def load_movies():
     """Load movies from u.item into database."""
 
+    print("Movies")
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    Movie.query.delete()
+
+    # Read u.user file and insert data
+    for row in open("seed_data/u.item"):
+        row = row.rstrip()
+        row_items = row.split("|")
+        movie_id, title, released_at, imdb_url = row_items[0:4]
+
+        movie = Movie(movie_id=movie_id, title=title, released_at=released_at, imdb_url=imdb_url)
+
+        # We need to add to the session or it won't ever be stored
+        db.session.add(movie)
+
+    # Once we're done, we should commit our work
+    db.session.commit()
+
 
 def load_ratings():
     """Load ratings from u.data into database."""
+
+
+    rating_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    movie_id = db.Column(db.Integer, nullable=False)
+    score = db.Column(db.Integer, nullable=True)
+    user_id 
 
 
 def set_val_user_id():
